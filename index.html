@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epic Gift</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 16px; min-height: 100vh; }
+        .container { max-width: 500px; margin: 0 auto; }
+        header { text-align: center; padding: 15px 0; border-bottom: 2px solid #e94560; }
+        h1 { font-size: 28px; color: #e94560; margin-bottom: 10px; }
+        .balance { background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 12px; text-align: center; margin: 10px 0; }
+        .balance-amount { font-size: 32px; font-weight: bold; color: #0fcc45; margin: 10px 0; }
+        .live-badge { background: #e94560; color: white; padding: 5px 12px; border-radius: 20px; font-size: 14px; }
+        .deposit-btn { background: linear-gradient(135deg, #0fcc45 0%, #0daa3a 100%); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; width: 100%; margin: 10px 0; }
+        .section { background: rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 15px; margin: 15px 0; }
+        .section-title { font-size: 18px; margin-bottom: 15px; color: #e94560; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 8px; }
+        .free-item { background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 8px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
+        .free-badge { background: #0fcc45; color: white; padding: 5px 10px; border-radius: 6px; font-size: 14px; }
+        .new-badge { background: #e94560; color: white; padding: 5px 10px; border-radius: 6px; font-size: 14px; text-align: center; margin: 10px 0; }
+        .nav { display: flex; justify-content: space-around; background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 12px; margin-top: 20px; }
+        .nav-item { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Epic Gift</h1>
+            <div class="balance">
+                <div>Your balance</div>
+                <div class="balance-amount">0.074</div>
+            </div>
+            <div class="live-badge">LIVE</div>
+            <button class="deposit-btn">Deposit</button>
+        </header>
+        
+        <div class="section">
+            <div class="section-title">Contracts</div>
+            <div class="free-item"><span>Upgrade</span></div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">FREE24</div>
+            <div class="free-item"><span>Free 24h</span><span class="free-badge">FREE</span></div>
+            <div class="free-item"><span>Free</span><span class="free-badge">FREE</span></div>
+            <div class="free-item"><span>Free</span><span class="free-badge">FREE</span></div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">FARM</div>
+            <div class="free-item"><span>FARM</span></div>
+        </div>
+        
+        <div class="new-badge">NEW</div>
+        
+        <div class="nav">
+            <div class="nav-item">Backpack</div>
+            <div class="nav-item">Invite</div>
+            <div class="nav-item">Home</div>
+            <div class="nav-item">Ranking</div>
+            <div class="nav-item">Earn</div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.free-badge').forEach(badge => {
+            badge.addEventListener('click', function() {
+                alert('Claiming your free gift...');
+            });
+        });
+        
+        document.querySelector('.deposit-btn').addEventListener('click', function() {
+            alert('Deposit window opening...');
+        });
+    </script>
+</body>
+</html>
