@@ -5,74 +5,798 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Epic Gift</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 16px; min-height: 100vh; }
-        .container { max-width: 500px; margin: 0 auto; }
-        header { text-align: center; padding: 15px 0; border-bottom: 2px solid #e94560; }
-        h1 { font-size: 28px; color: #e94560; margin-bottom: 10px; }
-        .balance { background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 12px; text-align: center; margin: 10px 0; }
-        .balance-amount { font-size: 32px; font-weight: bold; color: #0fcc45; margin: 10px 0; }
-        .live-badge { background: #e94560; color: white; padding: 5px 12px; border-radius: 20px; font-size: 14px; }
-        .deposit-btn { background: linear-gradient(135deg, #0fcc45 0%, #0daa3a 100%); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; width: 100%; margin: 10px 0; }
-        .section { background: rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 15px; margin: 15px 0; }
-        .section-title { font-size: 18px; margin-bottom: 15px; color: #e94560; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 8px; }
-        .free-item { background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 8px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
-        .free-badge { background: #0fcc45; color: white; padding: 5px 10px; border-radius: 6px; font-size: 14px; }
-        .new-badge { background: #e94560; color: white; padding: 5px 10px; border-radius: 6px; font-size: 14px; text-align: center; margin: 10px 0; }
-        .nav { display: flex; justify-content: space-around; background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 12px; margin-top: 20px; }
-        .nav-item { text-align: center; }
+        /* استایل کلی - دقیقاً مطابق تصاویر شما */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 16px;
+            min-height: 100vh;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        /* هدر و موجودی */
+        header {
+            text-align: center;
+            padding: 15px 0;
+            border-bottom: 2px solid #e94560;
+        }
+        
+        h1 {
+            font-size: 28px;
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+        
+        .balance {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .balance-amount {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0fcc45;
+            margin: 10px 0;
+        }
+        
+        .balance-change {
+            color: #ff4757;
+            font-size: 14px;
+        }
+        
+        /* دکمه‌ها و نشانگرها */
+        .live-badge {
+            background: #e94560;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        
+        .deposit-btn {
+            background: linear-gradient(135deg, #0fcc45 0%, #0daa3a 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            width: 100%;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        
+        /* بخش‌های مختلف */
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #e94560;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 8px;
+        }
+        
+        /* آیتم‌ها و گیفت‌ها */
+        .item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .item-name {
+            font-weight: bold;
+        }
+        
+        .item-value {
+            color: #0fcc45;
+        }
+        
+        .item-change {
+            color: #ff4757;
+            font-size: 12px;
+        }
+        
+        .free-badge {
+            background: #0fcc45;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .new-badge {
+            background: #e94560;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        /* نویگیشن پایین */
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .nav-item {
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            color: #0fcc45;
+            border-bottom: 2px solid #0fcc45;
+        }
+        
+        /* صفحه Deposit */
+        .wallet-address {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+            word-break: break-all;
+            font-size: 12px;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .amount-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #e94560;
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .ton-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .ton-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #e94560;
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: white;
+            flex: 1;
+            cursor: pointer;
+        }
+        
+        .ton-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* صفحه چرخ‌وشانس */
+        .wheel-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .wheel {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ff6b6b 0deg 45deg,
+                #4ecdc4 45deg 90deg,
+                #45b7d1 90deg 135deg,
+                #96ceb4 135deg 180deg,
+                #feca57 180deg 225deg,
+                #ff9ff3 225deg 270deg,
+                #54a0ff 270deg 315deg,
+                #5f27cd 315deg 360deg
+            );
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 30px;
+            background: #e94560;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        
+        .spin-btn {
+            background: linear-gradient(135deg, #e94560 0%, #c44569 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+        
+        .spin-btn:disabled {
+            background: gray;
+            cursor: not-allowed;
+        }
+        
+        /* صفحه گیفت‌ها */
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .gift-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .gift-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .gift-emoji {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .gift-name {
+            font-size: 12px;
+        }
+        
+        .gift-value {
+            color: #0fcc45;
+            font-size: 11px;
+        }
+        
+        /* صفحه Referral */
+        .referral-link {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+            word-break: break-all;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #54a0ff 0%, #2e86de 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        /* انیمیشن‌ها */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes win-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .win-animation {
+            animation: win-pulse 0.5s ease-in-out 3;
+        }
+        
+        /* مودال و پاپ‌آپ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .modal-btn.confirm {
+            background: #0fcc45;
+            color: white;
+        }
+        
+        .modal-btn.cancel {
+            background: #e94560;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Epic Gift</h1>
-            <div class="balance">
-                <div>Your balance</div>
-                <div class="balance-amount">0.074</div>
+        <!-- صفحه اصلی -->
+        <div id="home-page">
+            <header>
+                <h1>Epic Gift</h1>
+                <div class="balance">
+                    <div>Your balance</div>
+                    <div class="balance-amount" id="user-balance">0.074 <span class="balance-change">▼</span></div>
+                </div>
+                <div class="live-badge">LIVE</div>
+                <button class="deposit-btn" onclick="showPage('deposit')">Deposit</button>
+            </header>
+            
+            <div class="section">
+                <div class="section-title">Contracts</div>
+                <div class="item" onclick="showModal('Upgrade', 'Do you want to upgrade your contract?', 'upgrade')">
+                    <span>Upgrade</span>
+                </div>
             </div>
-            <div class="live-badge">LIVE</div>
-            <button class="deposit-btn">Deposit</button>
-        </header>
-        
-        <div class="section">
-            <div class="section-title">Contracts</div>
-            <div class="free-item"><span>Upgrade</span></div>
+            
+            <div class="section">
+                <div class="section-title">FREE24</div>
+                <div class="item" onclick="spinFreeWheel()">
+                    <span>Free 24h</span>
+                    <span class="free-badge">FREE</span>
+                </div>
+                <div class="item" onclick="showModal('Free Spin', 'Spin the free wheel?', 'freeSpin')">
+                    <span>Free</span>
+                    <span class="free-badge">FREE</span>
+                </div>
+                <div class="item" onclick="showModal('Free Spin', 'Spin the free wheel?', 'freeSpin')">
+                    <span>Free</span>
+                    <span class="free-badge">FREE</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">FARM</div>
+                <div class="item" onclick="showModal('Farm', 'Start farming?', 'farm')">
+                    <span>FARM</span>
+                </div>
+            </div>
+            
+            <div class="new-badge" onclick="showModal('New Items', 'Check out new items!', 'newItems')">NEW</div>
         </div>
-        
-        <div class="section">
-            <div class="section-title">FREE24</div>
-            <div class="free-item"><span>Free 24h</span><span class="free-badge">FREE</span></div>
-            <div class="free-item"><span>Free</span><span class="free-badge">FREE</span></div>
-            <div class="free-item"><span>Free</span><span class="free-badge">FREE</span></div>
+
+        <!-- صفحه Deposit -->
+        <div id="deposit-page" style="display: none;">
+            <header>
+                <h1>Deposit TON</h1>
+                <div class="balance">
+                    <div>Wallet Balance</div>
+                    <div class="balance-amount" id="wallet-balance">0.09 <span class="balance-change">▼</span></div>
+                </div>
+            </header>
+            
+            <div class="section">
+                <div class="section-title">Top Up Balance</div>
+                
+                <div class="item" onclick="selectPaymentMethod('ton')">
+                    <span>TON</span>
+                </div>
+                <div class="item" onclick="selectPaymentMethod('crypto')">
+                    <span>Other Crypto</span>
+                </div>
+                <div class="item" onclick="selectPaymentMethod('gifts')">
+                    <span>Gifts</span>
+                </div>
+                
+                <div class="wallet-address" onclick="copyToClipboard('UQCcZMIYz7MMwQ-UbHKRCwPl2AFbgL-FGSvAB-NGKLhzGsAF')">
+                    UQCc...GsAF ✓
+                </div>
+                
+                <div>Amount (minimum 0.1 TON)</div>
+                <input type="number" class="amount-input" id="deposit-amount" placeholder="Enter amount..." step="0.1" min="0.1">
+                
+                <div class="ton-buttons">
+                    <button class="ton-btn" onclick="setDepositAmount(1)">+1 TON</button>
+                    <button class="ton-btn" onclick="setDepositAmount(10)">+10 TON</button>
+                    <button class="ton-btn" onclick="setDepositAmount(100)">+100 TON</button>
+                </div>
+                
+                <button class="deposit-btn" onclick="processDeposit()">Top Up</button>
+            </div>
         </div>
-        
-        <div class="section">
-            <div class="section-title">FARM</div>
-            <div class="free-item"><span>FARM</span></div>
+
+        <!-- صفحه چرخ‌وشانس -->
+        <div id="wheel-page" style="display: none;">
+            <header>
+                <h1>Spin Wheel</h1>
+                <div class="balance">
+                    <div>Your balance</div>
+                    <div class="balance-amount" id="wheel-balance">0.074 <span class="balance-change">▼</span></div>
+                </div>
+            </header>
+            
+            <div class="wheel-container">
+                <div class="wheel" id="wheel">
+                    <div class="wheel-pointer"></div>
+                </div>
+                <button class="spin-btn" id="spin-btn" onclick="spinPaidWheel()">SPIN (0.1 TON)</button>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Daily Box</div>
+                <div class="item" onclick="openDailyBox()">
+                    <span>Hot</span>
+                    <span>Snoop Dogg 2.03</span>
+                </div>
+                <div class="item">
+                    <span>Come back in</span>
+                    <span id="countdown">1h 26m 6s</span>
+                </div>
+            </div>
         </div>
-        
-        <div class="new-badge">NEW</div>
-        
+
+        <!-- صفحه گیفت‌ها -->
+        <div id="gifts-page" style="display: none;">
+            <header>
+                <h1>Your Gifts</h1>
+                <div class="balance">
+                    <div>Total Value</div>
+                    <div class="balance-amount">2.47 TON</div>
+                </div>
+            </header>
+            
+            <div class="gifts-grid">
+                <div class="gift-item" onclick="showGiftDetails('Snoop Dogg', 2.03, '🎤')">
+                    <div class="gift-emoji">🎤</div>
+                    <div class="gift-name">Snoop Dogg</div>
+                    <div class="gift-value">2.03 TON</div>
+                </div>
+                <div class="gift-item" onclick="showGiftDetails('Ginger Cookie', 2.24, '🍪')">
+                    <div class="gift-emoji">🍪</div>
+                    <div class="gift-name">Ginger Cookie</div>
+                    <div class="gift-value">2.24 TON</div>
+                </div>
+                <div class="gift-item" onclick="showGiftDetails('Jester Hat', 1.97, '🎭')">
+                    <div class="gift-emoji">🎭</div>
+                    <div class="gift-name">Jester Hat</div>
+                    <div class="gift-value">1.97 TON</div>
+                </div>
+            </div>
+            
+            <button class="deposit-btn" onclick="sellAllGifts()">Sell All Gifts</button>
+        </div>
+
+        <!-- نویگیشن پایین -->
         <div class="nav">
-            <div class="nav-item">Backpack</div>
-            <div class="nav-item">Invite</div>
-            <div class="nav-item">Home</div>
-            <div class="nav-item">Ranking</div>
-            <div class="nav-item">Earn</div>
+            <div class="nav-item" onclick="showPage('gifts')">Backpack</div>
+            <div class="nav-item" onclick="showPage('referral')">Invite</div>
+            <div class="nav-item active" onclick="showPage('home')">Home</div>
+            <div class="nav-item" onclick="showPage('ranking')">Ranking</div>
+            <div class="nav-item" onclick="showPage('earn')">Earn</div>
+        </div>
+    </div>
+
+    <!-- مودال -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirm Action</h3>
+            <p id="modal-message">Are you sure you want to proceed?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="hideModal()">Cancel</button>
+                <button class="modal-btn confirm" onclick="confirmModal()">Confirm</button>
+            </div>
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('.free-badge').forEach(badge => {
-            badge.addEventListener('click', function() {
-                alert('Claiming your free gift...');
-            });
-        });
+        // داده‌های کاربر
+        let userData = {
+            balance: 0.074,
+            lastFreeSpin: null,
+            gifts: [
+                { name: "Snoop Dogg", value: 2.03, emoji: "🎤" },
+                { name: "Ginger Cookie", value: 2.24, emoji: "🍪" },
+                { name: "Jester Hat", value: 1.97, emoji: "🎭" }
+            ]
+        };
         
-        document.querySelector('.deposit-btn').addEventListener('click', function() {
-            alert('Deposit window opening...');
+        let currentModalAction = null;
+        let modalData = null;
+
+        // توابع مدیریت صفحات
+        function showPage(pageId) {
+            // مخفی کردن همه صفحات
+            document.querySelectorAll('[id$="-page"]').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // نمایش صفحه مورد نظر
+            document.getElementById(pageId + '-page').style.display = 'block';
+            
+            // بروزرسانی نویگیشن
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const pageIndex = {
+                'gifts': 1,
+                'referral': 2,
+                'home': 3,
+                'ranking': 4,
+                'earn': 5
+            };
+            
+            if (pageIndex[pageId]) {
+                document.querySelector(`.nav-item:nth-child(${pageIndex[pageId]})`).classList.add('active');
+            }
+            
+            // بروزرسانی موجودی در همه صفحات
+            updateBalances();
+        }
+        
+        function updateBalances() {
+            document.querySelectorAll('.balance-amount').forEach(el => {
+                if (el.id !== 'wallet-balance') {
+                    el.innerHTML = `${userData.balance.toFixed(3)} <span class="balance-change">▼</span>`;
+                }
+            });
+        }
+        
+        // توابع مودال
+        function showModal(title, message, action, data = null) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            document.getElementById('modal').style.display = 'flex';
+            currentModalAction = action;
+            modalData = data;
+        }
+        
+        function hideModal() {
+            document.getElementById('modal').style.display = 'none';
+            currentModalAction = null;
+            modalData = null;
+        }
+        
+        function confirmModal() {
+            switch (currentModalAction) {
+                case 'upgrade':
+                    upgradeContract();
+                    break;
+                case 'freeSpin':
+                    spinFreeWheel();
+                    break;
+                case 'farm':
+                    startFarming();
+                    break;
+                case 'newItems':
+                    showNewItems();
+                    break;
+                case 'sellGift':
+                    sellGift(modalData);
+                    break;
+            }
+            hideModal();
+        }
+        
+        // توابع deposit
+        function setDepositAmount(amount) {
+            document.getElementById('deposit-amount').value = amount;
+        }
+        
+        function selectPaymentMethod(method) {
+            alert(`Selected payment method: ${method.toUpperCase()}`);
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            alert('Address copied to clipboard!');
+        }
+        
+        function processDeposit() {
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
+            if (amount >= 0.1) {
+                userData.balance += amount;
+                updateBalances();
+                alert(`Successfully deposited ${amount} TON!`);
+                showPage('home');
+            } else {
+                alert('Minimum deposit amount is 0.1 TON');
+            }
+        }
+        
+        // توابع چرخ‌وشانس
+        function spinFreeWheel() {
+            if (userData.lastFreeSpin && (Date.now() - userData.lastFreeSpin) < 24 * 60 * 60 * 1000) {
+                const nextSpin = new Date(userData.lastFreeSpin + 24 * 60 * 60 * 1000);
+                alert(`You can spin again at ${nextSpin.toLocaleTimeString()}`);
+                return;
+            }
+            
+            showPage('wheel');
+            const wheel = document.getElementById('wheel');
+            const spinBtn = document.getElementById('spin-btn');
+            
+            spinBtn.disabled = true;
+            wheel.style.animation = 'spin 2s ease-out';
+            
+            setTimeout(() => {
+                wheel.style.animation = '';
+                spinBtn.disabled = false;
+                
+                // شانس برنده‌گیری
+                const win = Math.random() < 0.3; // 30% شانس برنده‌گیری
+                if (win) {
+                    const reward = Math.random() < 0.5 ? 0.1 : 0.05; // 0.1 یا 0.05 TON
+                    userData.balance += reward;
+                    updateBalances();
+                    alert(`🎉 You won ${reward} TON!`);
+                } else {
+                    alert('Try again later! No win this time.');
+                }
+                
+                userData.lastFreeSpin = Date.now();
+                showPage('home');
+            }, 2000);
+        }
+        
+        function spinPaidWheel() {
+            if (userData.balance < 0.1) {
+                alert('Insufficient balance! Need 0.1 TON to spin.');
+                return;
+            }
+            
+            userData.balance -= 0.1;
+            updateBalances();
+            
+            const wheel = document.getElementById('wheel');
+            const spinBtn = document.getElementById('spin-btn');
+            
+            spinBtn.disabled = true;
+            wheel.style.animation = 'spin 2s ease-out';
+            
+            setTimeout(() => {
+                wheel.style.animation = '';
+                spinBtn.disabled = false;
+                
+                // شانس برنده‌گیری بیشتر برای چرخش پولی
+                const win = Math.random() < 0.6; // 60% شانس برنده‌گیری
+                if (win) {
+                    const rewardType = Math.random() < 0.7 ? 'gift' : 'ton'; // 70% گیفت، 30% TON
+                    
+                    if (rewardType === 'ton') {
+                        const reward = 0.1 + Math.random() * 0.9; // 0.1 تا 1.0 TON
+                        userData.balance += reward;
+                        updateBalances();
+                        alert(`🎉 You won ${reward.toFixed(3)} TON!`);
+                    } else {
+                        const gifts = [
+                            { name: "Magic", value: 4.0, emoji: "✨" },
+                            { name: "Kitty", value: 4.0, emoji: "🐱" },
+                            { name: "Gem", value: 8.0, emoji: "💎" }
+                        ];
+                        const gift = gifts[Math.floor(Math.random() * gifts.length)];
+                        userData.gifts.push(gift);
+                        alert(`🎁 You won a gift: ${gift.emoji} ${gift.name} (${gift.value} TON)`);
+                    }
+                } else {
+                    alert('No win this time. Try again!');
+                }
+                
+                showPage('home');
+            }, 2000);
+        }
+        
+        // توابع گیفت‌ها
+        function showGiftDetails(name, value, emoji) {
+            showModal('Gift Details', `${emoji} ${name}\nValue: ${value} TON`, 'sellGift', { name, value });
+        }
+        
+        function sellGift(giftData) {
+            userData.balance += giftData.value;
+            userData.gifts = userData.gifts.filter(g => g.name !== giftData.name);
+            updateBalances();
+            alert(`Sold ${giftData.name} for ${giftData.value} TON!`);
+        }
+        
+        function sellAllGifts() {
+            const totalValue = userData.gifts.reduce((sum, gift) => sum + gift.value, 0);
+            userData.balance += totalValue;
+            userData.gifts = [];
+            updateBalances();
+            alert(`Sold all gifts for ${totalValue.toFixed(2)} TON!`);
+        }
+        
+        // سایر توابع
+        function upgradeContract() {
+            alert('Contract upgrade feature coming soon!');
+        }
+        
+        function startFarming() {
+            alert('Farming feature coming soon!');
+        }
+        
+        function showNewItems() {
+            alert('Check out our new items in the store!');
+        }
+        
+        function openDailyBox() {
+            alert('Daily box opened! Come back tomorrow for more rewards.');
+        }
+        
+        // راه‌اندازی اولیه
+        document.addEventListener('DOMContentLoaded', function() {
+            updateBalances();
+            
+            // شروع تایمر کانت‌داون
+            setInterval(() => {
+                const countdown = document.getElementById('countdown');
+                if (countdown) {
+                    // اینجا می‌توانید منطق کانت‌داون واقعی را پیاده‌سازی کنید
+                    countdown.textContent = '1h 26m 6s';
+                }
+            }, 1000);
         });
     </script>
 </body>
 </html>
+        
+        
